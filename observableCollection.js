@@ -1,7 +1,8 @@
 /**
  * Created by netanel on 10/01/15.
  */
-angular.module('observableCollection').factory('ObservableCollection', function() {
+angular.module('observableCollection', [])
+  .factory('ObservableCollection', function() {
   var ObservableCollection = function() {
     this.data = [];
     this.addObservers = [];
