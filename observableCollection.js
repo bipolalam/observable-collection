@@ -47,20 +47,21 @@ angular.module('observableCollection', [])
   };
 
   ObservableCollection.prototype.remove = function(id) {
+    var self = this;
     var removedItem;
     var removedItemIndex;
     angular.forEach(this.data, function(item, index) {
       if (item._id === id) {
         removedItem = item;
         removedItemIndex = index;
+        self.data.splice(removedItemIndex, 1);
+        angular.forEach(self.removeObservers, function(cb) {
+          cb(removedItem, removedItemIndex);
+        });
       }
     });
-    this.data.splice(removedItemIndex, 1);
-    angular.forEach(this.removeObservers, function(cb) {
-      cb(removedItem, removedItemIndex);
-    });
   };
-
+  
   ObservableCollection.prototype.getData = function() {
     return this.data;
   };
